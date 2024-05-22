@@ -1,5 +1,6 @@
 <?php
 require 'function.php';
+$pelanggan = mysqli_query($koneksi ,"SELECT * from pelanggan");
 ?>
 
 <!DOCTYPE html>
@@ -48,9 +49,8 @@ require 'function.php';
                         </a>
                         <a class="nav-link" href="pelanggan.php">
                             <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                            Kelola Pelanggan
+                           Kelola Pelanggan
                         </a>
-
                         <a class="nav-link" href="logout.php">
                             <div class="sb-nav-link-icon"><i class="fas fa-sign-out-alt"></i></div>
                             Logout
@@ -105,24 +105,21 @@ require 'function.php';
         <div id="layoutSidenav_content">
             <main>
                 <div class="container-fluid px-4">
-                    <h1 class="mt-4">Data Pesanan</h1>
+                    <h1 class="mt-4">Kelola Pelanggan</h1>
                     <ol class="breadcrumb mb-4">
-                        <li class="breadcrumb-item active">Selamat Datang</li>
                     </ol>
                     <div class="row">
                         <div class="col-xl-3 col-md-6">
                             <div class="card bg-primary text-white mb-4">
-                                <div class="card-body">Jumlah Pesanan </div>
-
+                                <div class="card-body">Jumlah Pelanggan :</div>
+                               
                             </div>
-
-                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                data-bs-target="#myModal">
-                                Tambah Pesanan
-                            </button>
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
+    Tambah Pelanggan
+  </button>
                             <div class="container mt-3">
 
-                            </div>
+</div>
                         </div>
 
                     </div>
@@ -130,42 +127,31 @@ require 'function.php';
                     <div class="card mb-4">
                         <div class="card-header">
                             <i class="fas fa-table me-1"></i>
-                            DataTable Example
+                            Data Pelanggan
                         </div>
                         <div class="card-body">
                             <table id="datatablesSimple">
                                 <thead>
                                     <tr>
-                                        <th>ID Pesanan</th>
-                                        <th>Tanggal Pesan</th>
+                                        <th>No</th>
                                         <th>Nama Pelanggan</th>
-                                        <th>Jumlah</th>
+                                        <th>No. Telp</th>
+                                        <th>Alamat</th>
                                         <th>Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php
-                                    $getpesanan = mysqli_query($koneksi, "SELECT * from pesanan p, pelanggan pl WHERE p.id_pelanggan=pl.id_pelanggan");
-                                    while ($p = mysqli_fetch_array($getpesanan)) {
-                                        $id_pesanan = $p['id_pesanan'];
-                                        $tanggal = $p['tgl_pesan'];
-                                        $nama_pelanggan = $p['nama_pelanggan'];
-                                        $alamat = $p['alamat'];
-                                        ?>
+                                    <?php $i = 1;?>
+                                    <?php foreach($pelanggan as $pl): ?>
 
-
-                                        <tr>
-                                            <td><?= $id_pesanan ?></td>
-                                            <td><?= $tanggal ?></td>
-                                            <td><?= $nama_pelanggan ?> - <?= $alamat ?></td>
-                                            <td>Jumlah</td>
-                                            <td><a href="view.php?idp= <?= $id_pesanan; ?>" class="btn btn-primary"
-                                                    target="blank">Tampilkan</a> |
-                                                Delete</td>
-
-                                        </tr>
-                                    <?php }
-                                    ; ?>
+                                    <tr>
+                                      <td><?= $i ?></td>
+                                      <td><?= $pl['nama_pelanggan'];?></td>
+                                      <td><?= $pl['notelp'];?></td>
+                                      <td><?= $pl['alamat'];?></td>
+                                    </tr>
+                                        <?php $i++;?>
+                                        <?php endforeach?>
                                 </tbody>
                             </table>
                         </div>
@@ -194,44 +180,30 @@ require 'function.php';
 </body>
 <!-- The Modal -->
 <div class="modal" id="myModal">
-    <div class="modal-dialog">
-        <div class="modal-content">
+  <div class="modal-dialog">
+    <div class="modal-content">
 
-            <!-- Modal Header -->
-            <div class="modal-header">
-                <h4 class="modal-title">Data Pesanan</h4>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
-            <form method="POST">
-                <!-- Modal body -->
-                <div class="modal-body">
-                    Pilih Pelanggan
-                    <select name="id_pelanggan" class="form-control">
-                        <?php
-                        $getpelanggan = mysqli_query($koneksi, "SELECT * FROM pelanggan");
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Data Tambah Pelanggan</h4>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+<form method="POST">
+      <!-- Modal body -->
+      <div class="modal-body">
+        <input type="text" name="nama_pelanggan" class="form-control mt-3" placeholder="nama pelanggan">
+        <input type="text" name="notelp" class="form-control mt-3" placeholder="no telp">
+        <input type="text" name="alamat" class="form-control mt-3" placeholder="alamat">
+      </div>
 
-                        while ($pl = mysqli_fetch_array($getpelanggan)) {
-                            $id_pelanggan = $pl['id_pelanggan'];
-                            $nama_pelanggan = $pl['nama_pelanggan'];
-                            $alamat = $pl['alamat'];
-                            ?>
-                            <option value="<?= $id_pelanggan; ?>"><?= $nama_pelanggan; ?> - <?= $alamat; ?> </option>
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-success" name="tambahpelanggan">Simpan</button>
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Tutup</button>
+      </div>
+      </form>
 
-                            <?php
-                        }
-                        ?>
-                    </select>
-                </div>
-
-                <!-- Modal footer -->
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-success" name="tambahpesanan">Simpan</button>
-                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Tutup</button>
-                </div>
-            </form>
-
-        </div>
     </div>
+  </div>
 </div>
-
 </html>

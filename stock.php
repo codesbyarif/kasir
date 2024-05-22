@@ -21,7 +21,7 @@ $barang = mysqli_query($koneksi ,"SELECT * from produk");
 <body class="sb-nav-fixed">
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
         <!-- Navbar Brand-->
-        <a class="navbar-brand ps-3" href="index.html">Start Bootstrap</a>
+        <a class="navbar-brand ps-3" href="index.html">Aplikasi Kasir</a>
         <!-- Sidebar Toggle-->
         <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i
                 class="fas fa-bars"></i></button>
@@ -47,7 +47,10 @@ $barang = mysqli_query($koneksi ,"SELECT * from produk");
                             <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                             Barang Masuk
                         </a>
-                     
+                        <a class="nav-link" href="pelanggan.php">
+                            <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                           Kelola Pelanggan
+                        </a>
                         <a class="nav-link" href="logout.php">
                             <div class="sb-nav-link-icon"><i class="fas fa-sign-out-alt"></i></div>
                             Logout
@@ -112,7 +115,7 @@ $barang = mysqli_query($koneksi ,"SELECT * from produk");
                                
                             </div>
                             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
-    Open modal
+    Tambah Barang
   </button>
                             <div class="container mt-3">
 
@@ -124,7 +127,7 @@ $barang = mysqli_query($koneksi ,"SELECT * from produk");
                     <div class="card mb-4">
                         <div class="card-header">
                             <i class="fas fa-table me-1"></i>
-                            DataTable Example
+                           Data Stock Barang
                         </div>
                         <div class="card-body">
                             <table id="datatablesSimple">
@@ -183,7 +186,7 @@ $barang = mysqli_query($koneksi ,"SELECT * from produk");
 
       <!-- Modal Header -->
       <div class="modal-header">
-        <h4 class="modal-title">Modal Heading</h4>
+        <h4 class="modal-title">Data Pesanan</h4>
         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
 <form method="POST">

@@ -1,5 +1,11 @@
 <?php
 require 'function.php';
+
+if (isset($_GET['idp'])) {
+    $idp = $_GET['idp'];
+} else {
+    header('location:index.php');
+}
 ?>
 
 <!DOCTYPE html>
@@ -46,7 +52,7 @@ require 'function.php';
                             <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                             Barang Masuk
                         </a>
-                        <a class="nav-link" href="pelanggan.php">
+                        <a class="nav-link" href="produk.php">
                             <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                             Kelola Pelanggan
                         </a>
@@ -105,16 +111,11 @@ require 'function.php';
         <div id="layoutSidenav_content">
             <main>
                 <div class="container-fluid px-4">
-                    <h1 class="mt-4">Data Pesanan</h1>
-                    <ol class="breadcrumb mb-4">
-                        <li class="breadcrumb-item active">Selamat Datang</li>
-                    </ol>
+                    <h1 class="mt-4">Data Pesanan : <?= $idp; ?></h1>
+
                     <div class="row">
                         <div class="col-xl-3 col-md-6">
-                            <div class="card bg-primary text-white mb-4">
-                                <div class="card-body">Jumlah Pesanan </div>
 
-                            </div>
 
                             <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                                 data-bs-target="#myModal">
@@ -136,32 +137,35 @@ require 'function.php';
                             <table id="datatablesSimple">
                                 <thead>
                                     <tr>
-                                        <th>ID Pesanan</th>
-                                        <th>Tanggal Pesan</th>
-                                        <th>Nama Pelanggan</th>
+                                        <th>No.</th>
+                                        <th>Nama Produk</th>
+                                        <th>Harga Satuan</th>
                                         <th>Jumlah</th>
+                                        <th>Sub-total</th>
                                         <th>Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <?php
-                                    $getpesanan = mysqli_query($koneksi, "SELECT * from pesanan p, pelanggan pl WHERE p.id_pelanggan=pl.id_pelanggan");
-                                    while ($p = mysqli_fetch_array($getpesanan)) {
-                                        $id_pesanan = $p['id_pesanan'];
-                                        $tanggal = $p['tgl_pesan'];
-                                        $nama_pelanggan = $p['nama_pelanggan'];
-                                        $alamat = $p['alamat'];
+                                    $get = mysqli_query($koneksi, "SELECT * from detail_pesanan p, produk pr WHERE p.id_produk=pr.id_produk");
+                                    $i = 1;
+                                    while ($ap = mysqli_fetch_array($get)) {
+                                        $qty = $ap['qty'];
+                                        $harga = $ap['harga'];
+                                        $namaproduk = $ap['nama_produk'];
+                                        $subtotal = $qty * $harga;
+
                                         ?>
 
 
                                         <tr>
-                                            <td><?= $id_pesanan ?></td>
-                                            <td><?= $tanggal ?></td>
-                                            <td><?= $nama_pelanggan ?> - <?= $alamat ?></td>
+                                            <td><?= $i++; ?></td>
+                                            <td><?= $namaproduk; ?></td>
+                                            <td><?= $harga; ?></td>
+                                            <td><?= $qty; ?></td>
+                                            <td><?= $subtotal; ?></td>
                                             <td>Jumlah</td>
-                                            <td><a href="view.php?idp= <?= $id_pesanan; ?>" class="btn btn-primary"
-                                                    target="blank">Tampilkan</a> |
-                                                Delete</td>
+                                            <td>Edit | Delete</td>
 
                                         </tr>
                                     <?php }
@@ -205,27 +209,30 @@ require 'function.php';
             <form method="POST">
                 <!-- Modal body -->
                 <div class="modal-body">
-                    Pilih Pelanggan
-                    <select name="id_pelanggan" class="form-control">
+                    Pilih Barang
+                    <select name="id_produk" class="form-control">
                         <?php
-                        $getpelanggan = mysqli_query($koneksi, "SELECT * FROM pelanggan");
+                        $getproduk = mysqli_query($koneksi, "SELECT * FROM produk");
 
-                        while ($pl = mysqli_fetch_array($getpelanggan)) {
-                            $id_pelanggan = $pl['id_pelanggan'];
-                            $nama_pelanggan = $pl['nama_pelanggan'];
-                            $alamat = $pl['alamat'];
+                        while ($pr = mysqli_fetch_array($getproduk)) {
+                            $id_produk = $pr['id_produk'];
+                            $nama_produk = $pr['nama_produk'];
+                            $stock = $pr['stock'];
+                            $deskripsi = $pr['deskripsi'];
                             ?>
-                            <option value="<?= $id_pelanggan; ?>"><?= $nama_pelanggan; ?> - <?= $alamat; ?> </option>
+                            <option value="<?= $id_produk; ?>"><?= $nama_produk; ?> - <?= $deskripsi; ?> </option>
 
                             <?php
                         }
                         ?>
                     </select>
+                    <input type="number" name="qty" class="form-control mt-3" placeholder="quantity">
+                    <input type="hidden" name="idp" valu="<?= $idp; ?>">
                 </div>
 
                 <!-- Modal footer -->
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-success" name="tambahpesanan">Simpan</button>
+                    <button type="submit" class="btn btn-success" name="addproduk">Simpan</button>
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Tutup</button>
                 </div>
             </form>

@@ -1,3 +1,7 @@
+<?php
+require 'ceklogin.php';
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -44,7 +48,7 @@
                         </a>
                         <a class="nav-link" href="pelanggan.php">
                             <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                           Kelola Pelanggan
+                            Kelola Pelanggan
                         </a>
                         <a class="nav-link" href="logout.php">
                             <div class="sb-nav-link-icon"><i class="fas fa-sign-out-alt"></i></div>

@@ -1,6 +1,8 @@
 <?php
-require 'function.php';
-$pelanggan = mysqli_query($koneksi ,"SELECT * from pelanggan");
+require 'ceklogin.php';
+$pelanggan = mysqli_query($koneksi, "SELECT * from pelanggan");
+
+$h2 = mysqli_num_rows($pelanggan);
 ?>
 
 <!DOCTYPE html>
@@ -49,7 +51,7 @@ $pelanggan = mysqli_query($koneksi ,"SELECT * from pelanggan");
                         </a>
                         <a class="nav-link" href="pelanggan.php">
                             <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                           Kelola Pelanggan
+                            Kelola Pelanggan
                         </a>
                         <a class="nav-link" href="logout.php">
                             <div class="sb-nav-link-icon"><i class="fas fa-sign-out-alt"></i></div>
@@ -111,15 +113,16 @@ $pelanggan = mysqli_query($koneksi ,"SELECT * from pelanggan");
                     <div class="row">
                         <div class="col-xl-3 col-md-6">
                             <div class="card bg-primary text-white mb-4">
-                                <div class="card-body">Jumlah Pelanggan :</div>
-                               
+                                <div class="card-body">Jumlah Pelanggan : <?= $h2; ?></div>
+
                             </div>
-                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
-    Tambah Pelanggan
-  </button>
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                data-bs-target="#myModal">
+                                Tambah Pelanggan
+                            </button>
                             <div class="container mt-3">
 
-</div>
+                            </div>
                         </div>
 
                     </div>
@@ -141,17 +144,17 @@ $pelanggan = mysqli_query($koneksi ,"SELECT * from pelanggan");
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php $i = 1;?>
-                                    <?php foreach($pelanggan as $pl): ?>
+                                    <?php $i = 1; ?>
+                                    <?php foreach ($pelanggan as $pl): ?>
 
-                                    <tr>
-                                      <td><?= $i ?></td>
-                                      <td><?= $pl['nama_pelanggan'];?></td>
-                                      <td><?= $pl['notelp'];?></td>
-                                      <td><?= $pl['alamat'];?></td>
-                                    </tr>
-                                        <?php $i++;?>
-                                        <?php endforeach?>
+                                        <tr>
+                                            <td><?= $i ?></td>
+                                            <td><?= $pl['nama_pelanggan']; ?></td>
+                                            <td><?= $pl['notelp']; ?></td>
+                                            <td><?= $pl['alamat']; ?></td>
+                                        </tr>
+                                        <?php $i++; ?>
+                                    <?php endforeach ?>
                                 </tbody>
                             </table>
                         </div>
@@ -180,30 +183,31 @@ $pelanggan = mysqli_query($koneksi ,"SELECT * from pelanggan");
 </body>
 <!-- The Modal -->
 <div class="modal" id="myModal">
-  <div class="modal-dialog">
-    <div class="modal-content">
+    <div class="modal-dialog">
+        <div class="modal-content">
 
-      <!-- Modal Header -->
-      <div class="modal-header">
-        <h4 class="modal-title">Data Tambah Pelanggan</h4>
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-      </div>
-<form method="POST">
-      <!-- Modal body -->
-      <div class="modal-body">
-        <input type="text" name="nama_pelanggan" class="form-control mt-3" placeholder="nama pelanggan">
-        <input type="text" name="notelp" class="form-control mt-3" placeholder="no telp">
-        <input type="text" name="alamat" class="form-control mt-3" placeholder="alamat">
-      </div>
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Data Tambah Pelanggan</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <form method="POST">
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <input type="text" name="nama_pelanggan" class="form-control mt-3" placeholder="nama pelanggan">
+                    <input type="text" name="notelp" class="form-control mt-3" placeholder="no telp">
+                    <input type="text" name="alamat" class="form-control mt-3" placeholder="alamat">
+                </div>
 
-      <!-- Modal footer -->
-      <div class="modal-footer">
-        <button type="submit" class="btn btn-success" name="tambahpelanggan">Simpan</button>
-        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Tutup</button>
-      </div>
-      </form>
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success" name="tambahpelanggan">Simpan</button>
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Tutup</button>
+                </div>
+            </form>
 
+        </div>
     </div>
-  </div>
 </div>
+
 </html>

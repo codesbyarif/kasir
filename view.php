@@ -1,8 +1,12 @@
 <?php
-require 'function.php';
+require 'ceklogin.php';
 
 if (isset($_GET['idp'])) {
     $idp = $_GET['idp'];
+
+    $ambilnamapelanggan = mysqli_query($koneksi, "SELECT * FROM pesanan p, pelanggan pl where p.id_pelanggan=pl.id_pelanggan and p.id_pesanan='$idp'");
+    $np = mysqli_fetch_array($ambilnamapelanggan);
+    $namapel = $np['nama_pelanggan'];
 } else {
     header('location:index.php');
 }
@@ -112,7 +116,7 @@ if (isset($_GET['idp'])) {
             <main>
                 <div class="container-fluid px-4">
                     <h1 class="mt-4">Data Pesanan : <?= $idp; ?></h1>
-
+                    <h1 class="mt-4">Nama Pelanggan : <?= $namapel; ?></h1>
                     <div class="row">
                         <div class="col-xl-3 col-md-6">
 
@@ -147,7 +151,7 @@ if (isset($_GET['idp'])) {
                                 </thead>
                                 <tbody>
                                     <?php
-                                    $get = mysqli_query($koneksi, "SELECT * from detail_pesanan p, produk pr WHERE p.id_produk=pr.id_produk");
+                                    $get = mysqli_query($koneksi, "SELECT * from detail_pesanan p, produk pr WHERE p.id_produk=pr.id_produk AND id_pesanan='$idp'");
                                     $i = 1;
                                     while ($ap = mysqli_fetch_array($get)) {
                                         $qty = $ap['qty'];
@@ -161,9 +165,9 @@ if (isset($_GET['idp'])) {
                                         <tr>
                                             <td><?= $i++; ?></td>
                                             <td><?= $namaproduk; ?></td>
-                                            <td><?= $harga; ?></td>
-                                            <td><?= $qty; ?></td>
-                                            <td><?= $subtotal; ?></td>
+                                            <td>Rp.<?= number_format($harga); ?></td>
+                                            <td><?= number_format($qty); ?></td>
+                                            <td>Rp.<?= number_format($subtotal); ?></td>
                                             <td>Jumlah</td>
                                             <td>Edit | Delete</td>
 
@@ -212,7 +216,7 @@ if (isset($_GET['idp'])) {
                     Pilih Barang
                     <select name="id_produk" class="form-control">
                         <?php
-                        $getproduk = mysqli_query($koneksi, "SELECT * FROM produk");
+                        $getproduk = mysqli_query($koneksi, "SELECT * FROM produk WHERE id_produk NOT LIKE(SELECT id_produk FROM detail_pesanan WHERE id_pesanan='$idp')");
 
                         while ($pr = mysqli_fetch_array($getproduk)) {
                             $id_produk = $pr['id_produk'];

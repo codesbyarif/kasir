@@ -1,7 +1,8 @@
 <?php
 require 'ceklogin.php';
-?>
+$barang = mysqli_query($koneksi, "SELECT * FROM masuk m, produk p WHERE m.id_produk=p.id_produk");
 
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -20,12 +21,10 @@ require 'ceklogin.php';
 <body class="sb-nav-fixed">
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
         <!-- Navbar Brand-->
-        <a class="navbar-brand ps-3" href="index.html">Start Bootstrap</a>
+        <a class="navbar-brand ps-3" href="index.php">Start Bootstrap</a>
         <!-- Sidebar Toggle-->
-        <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i
+        <button clRanggass="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i
                 class="fas fa-bars"></i></button>
-
-        <!-- Navbar-->
 
     </nav>
     <div id="layoutSidenav">
@@ -40,7 +39,7 @@ require 'ceklogin.php';
                         </a>
                         <a class="nav-link" href="stock.php">
                             <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                            Stok Barang
+                            Stock Barang masuk
                         </a>
                         <a class="nav-link" href="masuk.php">
                             <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
@@ -51,113 +50,136 @@ require 'ceklogin.php';
                             Kelola Pelanggan
                         </a>
                         <a class="nav-link" href="logout.php">
-                            <div class="sb-nav-link-icon"><i class="fas fa-sign-out-alt"></i></div>
+                            <div class="sb-nav-link-icon"><i class="fa fa-sign-out"></i></div>
                             Logout
                         </a>
-
-                        <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne"
-                            data-bs-parent="#sidenavAccordion">
-                            <nav class="sb-sidenav-menu-nested nav">
-                                <a class="nav-link" href="layout-static.html">Static Navigation</a>
-                                <a class="nav-link" href="layout-sidenav-light.html">Light Sidenav</a>
-                            </nav>
-                        </div>
-
-                        <div class="collapse" id="collapsePages" aria-labelledby="headingTwo"
-                            data-bs-parent="#sidenavAccordion">
-                            <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
-                                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
-                                    data-bs-target="#pagesCollapseAuth" aria-expanded="false"
-                                    aria-controls="pagesCollapseAuth">
-                                    Authentication
-                                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                                </a>
-                                <div class="collapse" id="pagesCollapseAuth" aria-labelledby="headingOne"
-                                    data-bs-parent="#sidenavAccordionPages">
-                                    <nav class="sb-sidenav-menu-nested nav">
-                                        <a class="nav-link" href="login.html">Login</a>
-                                        <a class="nav-link" href="register.html">Register</a>
-                                        <a class="nav-link" href="password.html">Forgot Password</a>
-                                    </nav>
-                                </div>
-                                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
-                                    data-bs-target="#pagesCollapseError" aria-expanded="false"
-                                    aria-controls="pagesCollapseError">
-                                    Error
-                                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                                </a>
-                                <div class="collapse" id="pagesCollapseError" aria-labelledby="headingOne"
-                                    data-bs-parent="#sidenavAccordionPages">
-                                    <nav class="sb-sidenav-menu-nested nav">
-                                        <a class="nav-link" href="401.html">401 Page</a>
-                                        <a class="nav-link" href="404.html">404 Page</a>
-                                        <a class="nav-link" href="500.html">500 Page</a>
-                                    </nav>
-                                </div>
-                            </nav>
-                        </div>
                     </div>
                 </div>
-
             </nav>
         </div>
         <div id="layoutSidenav_content">
             <main>
                 <div class="container-fluid px-4">
-                    <h1 class="mt-4">Dashboard</h1>
-                    <ol class="breadcrumb mb-4">
-                        <li class="breadcrumb-item active">Dashboard</li>
-                    </ol>
+                    <h1 class="mt-4">Stock Barang Masuk</h1>
                     <div class="row">
                         <div class="col-xl-3 col-md-6">
-                            <div class="card bg-primary text-white mb-4">
-                                <div class="card-body">Primary Card</div>
-                                <div class="card-footer d-flex align-items-center justify-content-between">
-                                    <a class="small text-white stretched-link" href="#">View Details</a>
-                                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                                </div>
+
+                            <div>
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                    data-bs-target="#myModal">
+                                    Tambah Barang Masuk
+                                </button>
                             </div>
                         </div>
-
                     </div>
-
-                    <div class="card mb-4">
+                    <div class="card mt-3 mb-4">
                         <div class="card-header">
                             <i class="fas fa-table me-1"></i>
-                            DataTable Example
+                            Data Stock Barang Masuk
                         </div>
                         <div class="card-body">
                             <table id="datatablesSimple">
                                 <thead>
                                     <tr>
-                                        <th>Name</th>
-                                        <th>Position</th>
-                                        <th>Office</th>
-                                        <th>Age</th>
-                                        <th>Start date</th>
-                                        <th>Salary</th>
+                                        <th>No</th>
+                                        <th>Nama Produk</th>
+                                        <th>Deskripsi</th>
+                                        <th>Jumlah</th>
+                                        <th>Tanggal</th>
+                                        <th>Aksi</th>
                                     </tr>
                                 </thead>
-                                <tfoot>
-                                    <tr>
-                                        <th>Name</th>
-                                        <th>Position</th>
-                                        <th>Office</th>
-                                        <th>Age</th>
-                                        <th>Start date</th>
-                                        <th>Salary</th>
-                                    </tr>
-                                </tfoot>
                                 <tbody>
-                                    <tr>
-                                        <td>Tiger Nixon</td>
-                                        <td>System Architect</td>
-                                        <td>Edinburgh</td>
-                                        <td>61</td>
-                                        <td>2011/04/25</td>
-                                        <td>$320,800</td>
-                                    </tr>
+                                    <?php $i = 1; ?>
+                                    <?php foreach ($barang as $brg): ?>
+                                        <tr>
+                                            <td><?= $i; ?></td>
+                                            <td><?= $brg['nama_produk'] ?></td>
+                                            <td><?= $brg['deskripsi'] ?></td>
+                                            <td><?= $brg['qty'] ?></td>
+                                            <td><?= $brg['tgl_masuk'] ?></td>
+                                            <td>
+                                                <button type="button" class="btn btn-warning" data-bs-toggle="modal"
+                                                    data-bs-target="#edit<?= $brg['id_masuk']; ?>">Edit</button>
+                                                |
+                                                <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                                                    data-bs-target="#delete<?= $brg['id_masuk']; ?>">Delete</button>
+                                            </td>
+                                        </tr>
+                                        <!-- Modal Edit-->
+                                        <div class="modal fade" id="edit<?= $brg['id_masuk']; ?>" tabindex="-1"
+                                            aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel">Ubah Data Barang
+                                                            Masuk</h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                            aria-label="Close"></button>
+                                                    </div>
 
+                                                    <form action="" method="post">
+
+                                                        <div class="modal-body">
+                                                            <input type="text" name="namaproduk" class="form-control"
+                                                                placeholder="Nama Produk"
+                                                                value="<?= $brg['nama_produk']; ?>" disabled>
+                                                            <input type="number" name="qty" class="form-control mt-2"
+                                                                placeholder="jumlah" value="<?= $brg['qty']; ?>" min="1"
+                                                                required>
+                                                            <input type="hidden" name="idm"
+                                                                value="<?= $brg['id_masuk']; ?>">
+                                                            <input type="hidden" name="idp"
+                                                                value="<?= $brg['id_produk']; ?>">
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="submit" class="btn btn-success"
+                                                                name="editmasuk">Submit</button>
+                                                            <button type="button" class="btn btn-secondary"
+                                                                data-bs-dismiss="modal">Close</button>
+                                                        </div>
+
+                                                    </form>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Modal Delete-->
+                                        <div class="modal fade" id="delete<?= $brg['id_masuk']; ?>" tabindex="-1"
+                                            aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel">Hapus Data Barang
+                                                            Masuk</h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                            aria-label="Close"></button>
+                                                    </div>
+
+                                                    <form action="" method="post">
+
+                                                        <div class="modal-body">
+                                                            Apakah anda ingin menghapus data ini
+                                                            <input type="hidden" name="idp"
+                                                                value="<?= $brg['id_produk']; ?>">
+                                                            <input type="hidden" name="idm"
+                                                                value="<?= $brg['id_masuk']; ?>">
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="submit" class="btn btn-success"
+                                                                name="hapusdatabarangmasuk">Submit</button>
+                                                            <button type="button" class="btn btn-secondary"
+                                                                data-bs-dismiss="modal">Close</button>
+                                                        </div>
+
+                                                    </form>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <?php $i++; ?>
+                                    <?php endforeach; ?>
                                 </tbody>
                             </table>
                         </div>
@@ -168,7 +190,6 @@ require 'ceklogin.php';
                 <div class="container-fluid px-4">
                     <div class="d-flex align-items-center justify-content-between small">
                         <div class="text-muted">Copyright &copy; Arif 2024</div>
-
                     </div>
                 </div>
             </footer>
@@ -184,5 +205,43 @@ require 'ceklogin.php';
         crossorigin="anonymous"></script>
     <script src="js/datatables-simple-demo.js"></script>
 </body>
+<div class="modal" id="myModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Data Barang Masuk</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <form method="post">
+                <div class="modal-body">
+                    Pilih Barang
+                    <select name="id_produk" id="" class="form-control">
+                        <?php
+                        $getproduk = mysqli_query($koneksi, "SELECT * FROM produk");
+                        while ($pl = mysqli_fetch_array($getproduk)) {
+                            $idproduk = $pl['id_produk'];
+                            $namaproduk = $pl['nama_produk'];
+                            $stock = $pl['stock'];
+                            $deskripsi = $pl['deskripsi'];
+                            ?>
+                            <option value="<?= $idproduk; ?>"><?= $namaproduk; ?> - <?= $deskripsi; ?> (Stock :
+                                <?= $stock; ?>) </option>
+                        <?php
+                        }
+                        ;
+                        ?>
+                    </select>
+                    <input type="number" name="qty" class="form-control mt-4" placeholder="Jumlah" min="1" required>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success" name="barangmasuk">Submit</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 
 </html>

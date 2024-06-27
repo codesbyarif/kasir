@@ -4,14 +4,17 @@ require 'ceklogin.php';
 if (isset($_GET['idp'])) {
     $idp = $_GET['idp'];
 
-    $ambilnamapelanggan = mysqli_query($koneksi, "SELECT * FROM pesanan p, pelanggan pl where p.id_pelanggan=pl.id_pelanggan and p.id_pesanan='$idp'");
+    $ambilnamapelanggan = mysqli_query(
+        $koneksi,
+        "SELECT * FROM pesanan p, pelanggan pl WHERE p.id_pelanggan=pl.id_pelanggan AND p.id_pesanan='$idp'"
+    );
     $np = mysqli_fetch_array($ambilnamapelanggan);
     $namapel = $np['nama_pelanggan'];
+    $idpel = $np['id_pelanggan'];
 } else {
     header('location:index.php');
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -30,13 +33,10 @@ if (isset($_GET['idp'])) {
 <body class="sb-nav-fixed">
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
         <!-- Navbar Brand-->
-        <a class="navbar-brand ps-3" href="index.html">Aplikasi Kasir</a>
+        <a class="navbar-brand ps-3" href="index.php">Start Bootstrap</a>
         <!-- Sidebar Toggle-->
         <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i
                 class="fas fa-bars"></i></button>
-
-        <!-- Navbar-->
-
     </nav>
     <div id="layoutSidenav">
         <div id="layoutSidenav_nav">
@@ -50,130 +50,88 @@ if (isset($_GET['idp'])) {
                         </a>
                         <a class="nav-link" href="stock.php">
                             <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                            Stok Barang
+                            Stock Barang
                         </a>
                         <a class="nav-link" href="masuk.php">
                             <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                             Barang Masuk
                         </a>
-                        <a class="nav-link" href="produk.php">
+                        <a class="nav-link" href="pelanggan.php">
                             <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                             Kelola Pelanggan
                         </a>
-
                         <a class="nav-link" href="logout.php">
-                            <div class="sb-nav-link-icon"><i class="fas fa-sign-out-alt"></i></div>
+                            <div class="sb-nav-link-icon"><i class="fa fa-sign-out"></i></div>
                             Logout
                         </a>
-
-                        <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne"
-                            data-bs-parent="#sidenavAccordion">
-                            <nav class="sb-sidenav-menu-nested nav">
-                                <a class="nav-link" href="layout-static.html">Static Navigation</a>
-                                <a class="nav-link" href="layout-sidenav-light.html">Light Sidenav</a>
-                            </nav>
-                        </div>
-
-                        <div class="collapse" id="collapsePages" aria-labelledby="headingTwo"
-                            data-bs-parent="#sidenavAccordion">
-                            <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
-                                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
-                                    data-bs-target="#pagesCollapseAuth" aria-expanded="false"
-                                    aria-controls="pagesCollapseAuth">
-                                    Authentication
-                                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                                </a>
-                                <div class="collapse" id="pagesCollapseAuth" aria-labelledby="headingOne"
-                                    data-bs-parent="#sidenavAccordionPages">
-                                    <nav class="sb-sidenav-menu-nested nav">
-                                        <a class="nav-link" href="login.html">Login</a>
-                                        <a class="nav-link" href="register.html">Register</a>
-                                        <a class="nav-link" href="password.html">Forgot Password</a>
-                                    </nav>
-                                </div>
-                                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
-                                    data-bs-target="#pagesCollapseError" aria-expanded="false"
-                                    aria-controls="pagesCollapseError">
-                                    Error
-                                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                                </a>
-                                <div class="collapse" id="pagesCollapseError" aria-labelledby="headingOne"
-                                    data-bs-parent="#sidenavAccordionPages">
-                                    <nav class="sb-sidenav-menu-nested nav">
-                                        <a class="nav-link" href="401.html">401 Page</a>
-                                        <a class="nav-link" href="404.html">404 Page</a>
-                                        <a class="nav-link" href="500.html">500 Page</a>
-                                    </nav>
-                                </div>
-                            </nav>
-                        </div>
                     </div>
                 </div>
-
             </nav>
         </div>
         <div id="layoutSidenav_content">
             <main>
                 <div class="container-fluid px-4">
-                    <h1 class="mt-4">Data Pesanan : <?= $idp; ?></h1>
-                    <h1 class="mt-4">Nama Pelanggan : <?= $namapel; ?></h1>
+                    <h1 class="mt-4">Data Pesanan : <?= $idp; ?> </h1>
+                    <h4 class="mt-4">Nama Pelanggan : <?= $namapel; ?> </h4>
                     <div class="row">
                         <div class="col-xl-3 col-md-6">
-
-
-                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                data-bs-target="#myModal">
-                                Tambah Pesanan
-                            </button>
-                            <div class="container mt-3">
-
+                            <div>
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                    data-bs-target="#myModal">
+                                    Tambah Pesanan
+                                </button>
                             </div>
                         </div>
-
                     </div>
-
-                    <div class="card mb-4">
+                    <div class="card mt-3 mb-4">
                         <div class="card-header">
                             <i class="fas fa-table me-1"></i>
-                            DataTable Example
+                            Data Pesanan
                         </div>
                         <div class="card-body">
                             <table id="datatablesSimple">
                                 <thead>
                                     <tr>
-                                        <th>No.</th>
+                                        <th>No</th>
                                         <th>Nama Produk</th>
                                         <th>Harga Satuan</th>
                                         <th>Jumlah</th>
-                                        <th>Sub-total</th>
+                                        <th>Subtotal</th>
                                         <th>Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <?php
-                                    $get = mysqli_query($koneksi, "SELECT * from detail_pesanan p, produk pr WHERE p.id_produk=pr.id_produk AND id_pesanan='$idp'");
+                                    $getview = mysqli_query(
+                                        $koneksi,
+                                        "SELECT * FROM detail_pesanan p, produk pr, pelanggan pl WHERE p.id_produk=pr.id_produk AND id_pesanan='$idp' AND id_pelanggan='$idpel'"
+                                    );
                                     $i = 1;
-                                    while ($ap = mysqli_fetch_array($get)) {
+                                    while ($ap = mysqli_fetch_array($getview)) {
+                                        $idpr = $ap['id_produk'];
+                                        $iddetail = $ap['id_detailpesanan'];
+                                        $idp = $ap['id_pesanan'];
                                         $qty = $ap['qty'];
                                         $harga = $ap['harga'];
-                                        $namaproduk = $ap['nama_produk'];
+                                        $nama_produk = $ap['nama_produk'];
+                                        $deskripsi = $ap['deskripsi'];
                                         $subtotal = $qty * $harga;
-
                                         ?>
-
-
                                         <tr>
                                             <td><?= $i++; ?></td>
-                                            <td><?= $namaproduk; ?></td>
+                                            <td><?= $nama_produk; ?> (<?= $deskripsi; ?>)</td>
                                             <td>Rp.<?= number_format($harga); ?></td>
                                             <td><?= number_format($qty); ?></td>
                                             <td>Rp.<?= number_format($subtotal); ?></td>
-                                            <td>Jumlah</td>
-                                            <td>Edit | Delete</td>
-
+                                            <td><button type="button" class="btn btn-success" data-bs-toggle="modal"
+                                                    data-bs-target="#edit<?= $iddetail; ?>">Edit</button> | <button
+                                                    type="button" class="btn btn-danger" data-bs-toggle="modal"
+                                                    data-bs-target="#delete<?= $idpr; ?>">Delete</button></td>
                                         </tr>
-                                    <?php }
-                                    ; ?>
+                                    <?php
+                                    }
+                                    ; // end while
+                                    ?>
                                 </tbody>
                             </table>
                         </div>
@@ -184,7 +142,6 @@ if (isset($_GET['idp'])) {
                 <div class="container-fluid px-4">
                     <div class="d-flex align-items-center justify-content-between small">
                         <div class="text-muted">Copyright &copy; Arif 2024</div>
-
                     </div>
                 </div>
             </footer>
@@ -200,6 +157,9 @@ if (isset($_GET['idp'])) {
         crossorigin="anonymous"></script>
     <script src="js/datatables-simple-demo.js"></script>
 </body>
+
+</html>
+
 <!-- The Modal -->
 <div class="modal" id="myModal">
     <div class="modal-dialog">
@@ -207,7 +167,7 @@ if (isset($_GET['idp'])) {
 
             <!-- Modal Header -->
             <div class="modal-header">
-                <h4 class="modal-title">Data Pesanan</h4>
+                <h4 class="modal-title">Tambah Pesanan</h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <form method="POST">
@@ -216,33 +176,99 @@ if (isset($_GET['idp'])) {
                     Pilih Barang
                     <select name="id_produk" class="form-control">
                         <?php
-                        $getproduk = mysqli_query($koneksi, "SELECT * FROM produk WHERE id_produk NOT LIKE(SELECT id_produk FROM detail_pesanan WHERE id_pesanan='$idp')");
-
-                        while ($pr = mysqli_fetch_array($getproduk)) {
-                            $id_produk = $pr['id_produk'];
-                            $nama_produk = $pr['nama_produk'];
-                            $stock = $pr['stock'];
-                            $deskripsi = $pr['deskripsi'];
+                        $getproduk = mysqli_query($koneksi, "SELECT * FROM produk");
+                        while ($pl = mysqli_fetch_array($getproduk)) {
+                            $idproduk = $pl['id_produk'];
+                            $namaproduk = $pl['nama_produk'];
+                            $deskripsi = $pl['deskripsi'];
+                            $stock = $pl['stock'];
                             ?>
-                            <option value="<?= $id_produk; ?>"><?= $nama_produk; ?> - <?= $deskripsi; ?> </option>
-
+                            <option value="<?= $idproduk; ?>"><?= $namaproduk; ?> - <?= $deskripsi; ?> (Stock:
+                                <?= $stock; ?>)</option>
                             <?php
                         }
                         ?>
                     </select>
-                    <input type="number" name="qty" class="form-control mt-3" placeholder="quantity">
-                    <input type="hidden" name="idp" valu="<?= $idp; ?>">
+                    <input type="number" name="qty" class="form-control mt-2" placeholder="Jumlah">
+                    <input type="hidden" name="idp" value="<?= $idp; ?>">
+                    <input type="hidden" name="idpel" value="<?= $idpel; ?>">
                 </div>
 
                 <!-- Modal footer -->
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-success" name="addproduk">Simpan</button>
-                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Tutup</button>
+                    <button type="submit" class="btn btn-success" name="addproduk">Submit</button>
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
                 </div>
             </form>
-
         </div>
     </div>
 </div>
 
-</html>
+
+<?php
+// Loop again to generate modals
+$getview = mysqli_query(
+    $koneksi,
+    "SELECT * FROM detail_pesanan p, produk pr, pelanggan pl WHERE p.id_produk=pr.id_produk AND id_pesanan='$idp' AND id_pelanggan='$idpel'"
+);
+while ($ap = mysqli_fetch_array($getview)) {
+    $idpr = $ap['id_produk'];
+    $iddetail = $ap['id_detailpesanan'];
+    $idp = $ap['id_pesanan'];
+    $qty = $ap['qty'];
+    ?>
+    <div class="modal" id="delete<?= $idpr; ?>">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Hapus Pesanan</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <form method="POST">
+                    <div class="modal-body">
+                        Apakah Anda yakin menghapus barang ini?
+                        <input type="hidden" name="idp" value="<?= $idp; ?>">
+                        <input type="hidden" name="idpr" value="<?= $idpr; ?>">
+                        <input type="hidden" name="iddetail" value="<?= $iddetail; ?>">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-success" name="hapusprodukpesanan">Hapus</button>
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Edit -->
+    <div class="modal" id="edit<?= $iddetail; ?>">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Edit Data Pesanan</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <form method="POST">
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <input type="hidden" name="idp" value="<?= $idp; ?>">
+                        <input type="hidden" name="idpr" value="<?= $idpr; ?>">
+                        <input type="hidden" name="iddetail" value="<?= $iddetail; ?>">
+                        <input type="number" name="qty" class="form-control mt-3" placeholder="quantity" min="1" required
+                            value="<?= $qty; ?>">
+                    </div>
+
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-success" name="editdetailpesanan">Edit</button>
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Tutup</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <?php
+} // end while
+?>

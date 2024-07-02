@@ -55,10 +55,10 @@ if (isset($_POST['tambahpelanggan'])) {
     $notelp = $_POST['notelp'];
     $alamat = $_POST['alamat'];
 
-    $insert_pelanggan = mysqli_query($koneksi, "INSERT INTO pelanggan (nama_pelanggan, notelp, alamat)
+    $tambahpelanggan = mysqli_query($koneksi, "INSERT INTO pelanggan (nama_pelanggan, notelp, alamat)
     VALUES ('$nama_pelanggan','$notelp','$alamat')");
 
-    if ($insert_pelanggan) {
+    if ($tambahpelanggan) {
         header('location:pelanggan.php');
     } else {
         echo '
@@ -316,9 +316,9 @@ if (isset($_POST['barangmasuk'])) {
     $qty = $_POST['qty'];
 
     //cari tahu stock sekarang
-    $caristock = mysqli_query($koneksi, "SELECT * FROM produk WHERE id_produk='$idproduk'");
-    $caristock2 = mysqli_fetch_array($caristock);
-    $stocksekarang = $caristock2['stock'];
+    $barangmasuk = mysqli_query($koneksi, "SELECT * FROM produk WHERE id_produk='$idproduk'");
+    $barangmasuk2 = mysqli_fetch_array($barangmasuk);
+    $stocksekarang = $barangmasuk2['stock'];
 
     //hitung stock
     $newstockb = $stocksekarang + $qty;
